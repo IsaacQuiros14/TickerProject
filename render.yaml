@@ -1,0 +1,24 @@
+# Blueprint de Render: despliegue gratuito de Ticker como servicio web Node.
+# En Render: New → Blueprint → seleccionar este repositorio.
+#
+# Nota del plan gratuito: el sistema de archivos es efímero. La base SQLite se
+# recrea con los datos de demostración cada vez que el servicio se reinicia o
+# "despierta" tras 15 minutos sin uso.
+services:
+  - type: web
+    name: ticker
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '22'
+      - key: DEMO_MODE
+        value: 'true'
+      - key: SESSION_SECRET
+        generateValue: true
