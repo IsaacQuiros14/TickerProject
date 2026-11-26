@@ -1,0 +1,32 @@
+{
+  "name": "ticker",
+  "version": "1.0.0",
+  "description": "Ticker: herramienta de gestión de tickets de soporte técnico (Help Desk) con dashboard de métricas",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server.js",
+    "seed": "node --disable-warning=ExperimentalWarning seed.js",
+    "test": "node --disable-warning=ExperimentalWarning --test --test-reporter=spec \"tests/*.test.js\"",
+    "lint": "eslint ."
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IsaacQuiros14/TickerProject.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0"
+  }
+}
