@@ -9,7 +9,7 @@
 ![SQLite](https://img.shields.io/badge/db-SQLite-1c1b19)
 ![Licencia](https://img.shields.io/badge/licencia-MIT-1c1b19)
 
-[Demo en vivo](#demo-en-vivo) · [Instalación](#instalación) · [Manual técnico](docs/Manual_Tecnico.pdf) · [Manual de usuario](docs/Manual_de_Usuario.pdf)
+[**Demo en vivo**](https://ticker-or03.onrender.com) · [Instalación](#instalación) · [Manual técnico](docs/Manual_Tecnico.pdf) · [Manual de usuario](docs/Manual_de_Usuario.pdf)
 
 <img src="docs/capturas/04-dashboard.png" alt="Dashboard de métricas de Ticker" width="900">
 
@@ -178,8 +178,7 @@ La pantalla de inicio de sesión tiene botones para entrar con cada rol en un cl
 
 ## Demo en vivo
 
-<!-- Reemplazar con la URL que asigne Render -->
-**URL:** _pendiente de publicar_
+**URL:** <https://ticker-or03.onrender.com>
 
 Ticker se despliega gratis en [Render](https://render.com) con el blueprint [`render.yaml`](render.yaml):
 
