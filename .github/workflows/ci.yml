@@ -1,0 +1,80 @@
+# Integración continua: en cada push y pull request a main se revisa el estilo,
+# se ejecutan las pruebas automáticas en Node 22 y 24, y se verifica que el
+# servidor arranque en modo producción y responda al health check.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint (ESLint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Pruebas (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm test
+
+  smoke:
+    name: Arranque en producción
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      SESSION_SECRET: ci-only-secret
+      DEMO_MODE: 'true'
+      PORT: 3000
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --omit=dev
+      - name: Iniciar servidor
+        run: |
+          npm start > server.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fs http://localhost:3000/api/health && exit 0
+            sleep 1
+          done
+          cat server.log
+          exit 1
+      - name: Verificar frontend y API
+        run: |
+          curl -fs http://localhost:3000/ | grep -q "<title>Ticker"
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/api/tickets)" = "401"
+          curl -fs -X POST http://localhost:3000/api/auth/login \
+            -H 'Content-Type: application/json' \
+            -d '{"email":"admin@ticker.cr","password":"admin123"}' | grep -q '"rol":"admin"'
