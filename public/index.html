@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticker · Mesa de ayuda</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231c1b19'/><path d='M9 11h14M9 16h14M9 21h8' stroke='%23e8590c' stroke-width='3' stroke-linecap='round'/></svg>" />
+</head>
+<body>
+  <!-- Vista de login -->
+  <main id="login" class="login" hidden>
+    <section class="login-card">
+      <div class="brand brand--dark">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <strong>Ticker</strong>
+          <small>Mesa de ayuda · TI</small>
+        </div>
+      </div>
+      <h1>Iniciar sesión</h1>
+      <form id="login-form" novalidate>
+        <label>Correo
+          <input type="email" name="email" autocomplete="username" required />
+        </label>
+        <label>Contraseña
+          <input type="password" name="password" autocomplete="current-password" required />
+        </label>
+        <p class="form-error" id="login-error" role="alert"></p>
+        <button type="submit" class="btn btn--primary btn--block">Entrar</button>
+      </form>
+      <p class="demo-note" id="demo-note" hidden>
+        Demo pública: los datos vuelven a los de ejemplo cuando el servidor se reinicia,
+        y las cuentas de demostración están protegidas.
+      </p>
+      <details class="demo-users">
+        <summary>Usuarios de demostración</summary>
+        <ul>
+          <li><button type="button" data-demo="admin@ticker.cr|admin123">Administrador · Laura Méndez</button></li>
+          <li><button type="button" data-demo="carlos@ticker.cr|tecnico123">Técnico · Carlos Rojas</button></li>
+          <li><button type="button" data-demo="maria@empresa.com|usuario123">Solicitante · María Jiménez</button></li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <!-- Aplicación -->
+  <div id="app" class="shell" hidden>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <strong>Ticker</strong>
+          <small>Mesa de ayuda · TI</small>
+        </div>
+      </div>
+      <nav id="nav" class="nav"></nav>
+      <div class="me">
+        <div>
+          <strong id="me-nombre"></strong>
+          <span id="me-rol" class="role-tag"></span>
+        </div>
+        <button id="logout" class="btn btn--ghost btn--sm" type="button">Salir</button>
+      </div>
+      <a class="repo-link" href="https://github.com/IsaacQuiros14/TickerProject" target="_blank" rel="noopener">
+        Código en GitHub <span id="version" class="mono"></span></a>
+    </aside>
+    <main id="view" class="view" tabindex="-1"></main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
